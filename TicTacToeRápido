@@ -1,0 +1,259 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+/*Jogo da velha prático !!!
+ * Criador:Brendo Gomes Prates
+ * Github:BrendoGP
+ * link: https://github.com/BrendoGP
+ * !!!! esse programa fere de 1000 maneiras possiveis o paradigma de poo !!!!
+ * OBS: lembrando que esse game foi feito como um desafio para utilizar apenas o main e as tecnicas básicas
+ * adquiridas durante o curso de bsi, tem como facilitar o codigo de varios meios diferentes (como por exemplo
+ * o uso de classes,ou usar uma interface bonitinha mais convenhamos "os pcs do colegio não rodam campo minado no low"
+ * imagina uma interface basica no javafx por exemplo kk) mais esse codigo foi feito para fazer um ctrl + c , ctrl + v e colar para quem quiser matar o tempo
+ * com um amigo fiquem a vontade  se quiserem depois fazer alteração e vcs mesmos evoluirem o codigo(me enviem kkk). AGORA BOM GAME
+ * E ATÉ MAIS :)*/
+
+public class TicTacToeRapido {
+	
+	public static void main(String[] args) {
+		
+	//teclado	
+	Scanner keyboard = new Scanner(System.in); 
+	
+	//lista de casas obs:para evitar duplicação 
+	ArrayList<Integer> casas = new ArrayList<Integer>();
+	
+	//variáveis
+	boolean menuPartida = false;
+	String player1 = "jogador 1", player2 = "jogador 2";//players
+	String p1 = "", p2 = "";//simbolo x ou o
+	String partida = "iniciar jogo";
+	int jogador1 = 0;
+	int ptsPlayer1 = 0 , ptsPlayer2 = 0, contadorPartidas =0;
+	
+	
+	//regras
+	System.out.println("X O X O X O X O X O X O X O X");
+	System.out.println("\nJogo da velha ");
+	System.out.println("Regras:");
+	System.out.println("No modo básico do jogo, participam duas pessoas,");
+	System.out.println(" que jogam alternadamente, preenchendo cada um dos espaços vazios.");
+	System.out.println(" Cada participante poderá usar um símbolo (X ou O).");
+	System.out.println(" Vence o jogador que conseguir formar primeiro uma linha com três símbolos iguais,");
+	System.out.println( " seja ela na horizontal, vertical ou diagonal.");
+	System.out.println("( X ) começa.");
+	System.out.println("\nX O X O X O X O X O X O X O X");
+	System.out.println("\n");
+	
+	
+	//nome dos jogadores
+	System.out.print("digite o nome do jogador 1 :");
+	player1 = keyboard.nextLine();
+	System.out.print("digite o nome do jogador 2 :");
+	player2 = keyboard.nextLine();
+
+	//quem ira começar o game
+	//System.out.println("\n[ X ] começa");
+	 boolean jogx = false;
+	while(!jogx) {
+	try {
+	System.out.println("Quem sera o primeiro ?");
+	System.out.println(player1 + " digite [ 1 ]");
+	System.out.println(player2 + " digite [ 2 ]");
+	jogador1 = keyboard.nextInt();
+	if(jogador1 == 1) { p1 = "X" ; p2 = "O"; jogx = true; break; }
+	if(jogador1 == 2) { p2 = "X" ; p1 = "O"; jogx = true; break; }
+	else { throw new Exception(); }
+	
+	}catch(Exception ex) {
+		System.err.println("Numero informado invalido tente novamente !!!");
+		keyboard.nextLine(); }
+    }//while
+	
+	do {
+		
+	try {	
+	System.out.println("X O X O X O X O X O X O X O X");
+	System.out.println("\nPara "+partida+" digite [ 1 ]");
+	System.out.println("Para sair digite [ 2 ]");
+	System.out.println("\nX O X O X O X O X O X O X O X");
+	System.out.println("\n");
+	int inicioFim = keyboard.nextInt();
+	if(inicioFim == 1) {
+		
+	//reseta as variáveis em cada partida
+	String tc1 = "1",tc2 = "2",tc3 = "3",tc4 = "4",tc5 = "5",tc6 = "6",tc7 = "7",tc8="8",tc9 = "9";
+	int win1 = -1, win2 = -2, win3 = -3, win4 = -4, win5 = -5, win6 = -6, win7 = -7, win8 = -8, win9 = -9;
+	casas.clear();
+	
+	//logica do jogo
+	for(int i = 0 ; i<9 ; i++) {
+			
+	//menu do game
+	System.out.println("\nSelecione o numero que deseja marcar"
+			                  	+ " de acordo com a casa correspondente: ");
+	System.out.println("\n          " + tc1 + " | " + tc2 +" | " + tc3);
+	System.out.println("        " + "_____________");
+	System.out.println("          " + tc4 + " | " + tc5 +" | " + tc6);
+	System.out.println("        " + "_____________");
+	System.out.println("          " + tc7 + " | " + tc8 +" | " + tc9);
+	if(jogador1 == 1) {System.out.println("\nVez de " + player1 + "(" + p1 + ")");}
+    if(jogador1 == 2) {System.out.println("\nVez de " + player2 + "(" + p2 + ")");}
+	System.out.println("Digite o numero:");
+	try {
+		
+	int casa = keyboard.nextInt();
+	
+	if(casas.contains(casa)) {
+	System.err.println("Casa ja selecionada, por favor tente novamente !!!");
+	i--;
+	}
+	else {
+		
+     casas.add(casa);
+	
+	
+	//switch 
+	switch(casa) {
+	
+	case 1: {
+		//tc1 = player 1 win1 = player 1 
+	 if(jogador1 == 1) {tc1 = p1; win1=1;}
+	 else{tc1 = p2; win1=2;}
+	    break;
+	}
+	
+	case 2: {
+		 if(jogador1 == 1) {tc2 = p1; win2=1;}
+		 else{tc2 = p2; win2=2;}
+			break;	
+		}
+	case 3: {
+		 if(jogador1 == 1) {tc3 = p1; win3=1;}
+		 else{tc3 = p2; win3=2;}
+			break;	
+		}
+	case 4: {
+		 if(jogador1 == 1) {tc4 = p1; win4=1;}
+		 else{tc4 = p2; win4=2;}
+			break;	
+		}
+	case 5: {
+		 if(jogador1 == 1) {tc5 = p1; win5=1;}
+		 else{tc5 = p2; win5=2;}
+			break;	
+		}
+	case 6: {
+		 if(jogador1 == 1) {tc6 = p1; win6=1;}
+		 else{tc6 = p2; win6=2;}
+			break;	
+		}
+	case 7: {
+		 if(jogador1 == 1) {tc7 = p1; win7=1;}
+		 else{tc7 = p2; win7=2;}
+			break;	
+		}
+	
+	case 8: {
+		 if(jogador1 == 1) {tc8 = p1; win8=1;}
+		 else{tc8 = p2; win8=2;}
+			break;	
+		}
+	
+	case 9: {
+		 if(jogador1 == 1) {tc9 = p1; win9=1;}
+		 else{tc9 = p2; win9=2;}
+			break;	
+		}
+	
+	default:
+		throw new Exception();
+		
+	 }//switch
+	
+	
+	//mudança de player
+		if(jogador1 == 1) {	
+		jogador1 = 2 ; }
+		else{jogador1 = 1;}
+		
+	
+	}//else
+	
+	}catch(Exception ex) {
+    System.err.println("Numero informado invalido !!!");
+	keyboard.nextLine(); }
+	
+	// vitoria
+	if(win1 == win2 && win2 == win3) {
+	    if(win1 == 1) { ptsPlayer1 ++;System.out.println("Vitoria de " + player1 + " :) !!!");break;}
+	    if(win1 == 2) { ptsPlayer2 ++;System.out.println("Vitoria de " + player2 + " :) !!!");break;}
+	}
+	
+	if(win4 == win5 && win5 == win6) {
+		if(win4 == 1) { ptsPlayer1 ++;System.out.println("Vitoria de " + player1 + " :) !!!");break;}
+		if(win4 == 2) { ptsPlayer2 ++;System.out.println("Vitoria de " + player2 + " :) !!!");break;}
+		}
+	
+	if(win7 == win8 && win8 == win9) {
+		if(win7 == 1) { ptsPlayer1 ++;System.out.println("Vitoria de " + player1 + " :) !!!");break;}
+		if(win7 == 2) { ptsPlayer2 ++;System.out.println("Vitoria de " + player2 + " :) !!!");break;}
+		}
+	
+	if(win1 == win4 && win4 == win7) {
+		if(win1 == 1) { ptsPlayer1 ++;System.out.println("Vitoria de " + player1 + " :) !!!");break;}
+		if(win1 == 2) { ptsPlayer2 ++;System.out.println("Vitoria de " + player2 + " :) !!!");break;}
+		}
+	
+	if(win5 == win2 && win2 == win8) {
+		if(win2 == 1) { ptsPlayer1 ++;System.out.println("Vitoria de " + player1 + " :) !!!");break;}
+		if(win2 == 2) { ptsPlayer2 ++;System.out.println("Vitoria de " + player2 + " :) !!!");break;}
+		}
+	
+	if(win3 == win6 && win6 == win9) {
+		if(win3 == 1) { ptsPlayer1 ++;System.out.println("Vitoria de " + player1 + " :) !!!");break;}
+		if(win3 == 2) { ptsPlayer2 ++;System.out.println("Vitoria de " + player2 + " :) !!!");break;}
+		}
+	
+	if(win1 == win5 && win5 == win9) {
+		if(win1 == 1) { ptsPlayer1 ++;System.out.println("Vitoria de " + player1 + " :) !!!");break;}
+		if(win1 == 2) { ptsPlayer2 ++;System.out.println("Vitoria de " + player2 + " :) !!!");break;}
+		}
+	
+	if(win3 == win5 && win5 == win7) {
+		if(win3 == 1) { ptsPlayer1 ++;System.out.println("Vitoria de " + player1 + " :) !!!");break;}
+		if(win3 == 2) { ptsPlayer2 ++;System.out.println("Vitoria de " + player2 + " :) !!!");break;}
+		}
+	
+	}//for
+if(ptsPlayer1 !=0 || ptsPlayer2 != 0) {	
+	    System.out.println("\n######################");
+		System.out.println("####   PLACAR   ######");
+		System.out.println(player1 + " : " + ptsPlayer1);
+		System.out.println(player2 + " : " + ptsPlayer2);
+		System.out.println("######################");
+	}
+
+	partida = "jogar novamente";// ficar bonitinho 
+	}//menupartida first if
+	
+	if(inicioFim == 2) {	
+	menuPartida = true;
+	
+	}//menupartida if secundario
+	
+	/*else {
+	 * não é necessário lançar exceptions pelo else
+		//throw new Exception();
+	}*/
+	
+	}catch(Exception ab) {
+		  System.err.println("Valor informado invalido !!!");
+			keyboard.nextLine(); }
+		
+	}while(!menuPartida);
+
+	System.out.println("Obrigado por jogar !!!");
+	
+	}//main
+}//class
